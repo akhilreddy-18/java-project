@@ -15,7 +15,7 @@ public class NumberSeriesGame {
         };
 
         
-        int[] answers = {10, 15, 25, 8};
+        int[] answers = {50, 60, 75, 80};
 
         int score = 0;
 
