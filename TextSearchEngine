@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class TextSearchEngine {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input documents
+        System.out.print("Enter number of documents: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        String[] docs = new String[n];
+
+        System.out.println("Enter documents:");
+        for (int i = 0; i < n; i++) {
+            docs[i] = sc.nextLine().toLowerCase();
+        }
+
+        // Build index (word -> document numbers)
+        HashMap<String, List<Integer>> index = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            String[] words = docs[i].split(" ");
+
+            for (String word : words) {
+                index.putIfAbsent(word, new ArrayList<>());
+                if (!index.get(word).contains(i)) {
+                    index.get(word).add(i);
+                }
+            }
+        }
+
+        // Search
+        while (true) {
+            System.out.print("\nEnter word to search (or 'exit'): ");
+            String query = sc.nextLine().toLowerCase();
+
+            if (query.equals("exit")) break;
+
+            if (index.containsKey(query)) {
+                System.out.println("Found in documents:");
+                for (int docId : index.get(query)) {
+                    System.out.println("Doc " + (docId + 1) + ": " + docs[docId]);
+                }
+            } else {
+                System.out.println("No results found.");
+            }
+        }
+    }
+}
