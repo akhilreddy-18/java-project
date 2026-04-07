@@ -1,0 +1,112 @@
+import java.util.*;
+
+// Product class
+class Product {
+    int id;
+    String name;
+    double price;
+
+    Product(int id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+}
+
+// ShoppingCart class
+class ShoppingCart {
+    List<Product> cart = new ArrayList<>();
+
+    // Add product
+    void addProduct(Product p) {
+        cart.add(p);
+        System.out.println(p.name + " added to cart.");
+    }
+
+    // Remove product
+    void removeProduct(int id) {
+        Iterator<Product> it = cart.iterator();
+        while (it.hasNext()) {
+            Product p = it.next();
+            if (p.id == id) {
+                it.remove();
+                System.out.println(p.name + " removed from cart.");
+                return;
+            }
+        }
+        System.out.println("Product not found!");
+    }
+
+    // Display cart
+    void displayCart() {
+        if (cart.isEmpty()) {
+            System.out.println("Cart is empty.");
+            return;
+        }
+        System.out.println("\nItems in Cart:");
+        for (Product p : cart) {
+            System.out.println(p.id + " " + p.name + " ₹" + p.price);
+        }
+    }
+
+    // Calculate total
+    void getTotal() {
+        double total = 0;
+        for (Product p : cart) {
+            total += p.price;
+        }
+        System.out.println("Total Price: ₹" + total);
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ShoppingCart cart = new ShoppingCart();
+
+        while (true) {
+            System.out.println("\n1. Add Product");
+            System.out.println("2. Remove Product");
+            System.out.println("3. View Cart");
+            System.out.println("4. Total Price");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter choice: ");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1:
+                    System.out.print("Enter id: ");
+                    int id = sc.nextInt();
+                    System.out.print("Enter name: ");
+                    String name = sc.next();
+                    System.out.print("Enter price: ");
+                    double price = sc.nextDouble();
+                    cart.addProduct(new Product(id, name, price));
+                    break;
+
+                case 2:
+                    System.out.print("Enter product id to remove: ");
+                    int rid = sc.nextInt();
+                    cart.removeProduct(rid);
+                    break;
+
+                case 3:
+                    cart.displayCart();
+                    break;
+
+                case 4:
+                    cart.getTotal();
+                    break;
+
+                case 5:
+                    System.out.println("Thank you!");
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+}
